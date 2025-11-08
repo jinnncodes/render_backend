@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: laravel-api
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    autoDeploy: true
+    envVars:
+  - key: APP_ENV
+    value: production
+  - key: APP_DEBUG
+    value: "false"
+  - key: APP_KEY
+    value: base64:lZRxpYkwZDBTwwR9p586Rem73ietYqxR0jHEVorArYo=
+  - key: DB_CONNECTION
+    value: mysql
+  - key: DB_HOST
+    value: mysql.railway.internal
+  - key: DB_PORT
+    value: "3306"
+  - key: DB_DATABASE
+    value: railway
+  - key: DB_USERNAME
+    value: root
+  - key: DB_PASSWORD
+    value: cIoJwvtbrgWjXZdLugcFXVeLPEFwtemH
+  - key: CACHE_DRIVER
+    value: file
+  - key: SESSION_DRIVER
+    value: file
