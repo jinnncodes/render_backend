@@ -4,7 +4,7 @@ FROM php:8.1-apache
 # Set working directory
 WORKDIR /var/www/html
 
-# Install system dependencies
+# Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -14,10 +14,15 @@ RUN apt-get update && apt-get install -y \
     zip \
     libzip-dev \
     libpng-dev \
-    libjpeg-dev \
+    libjpeg62-turbo-dev \
     libfreetype6-dev \
+    libwebp-dev \
     libssl-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    pkg-config \
+    && docker-php-ext-configure gd \
+        --with-freetype \
+        --with-jpeg \
+        --with-webp \
     && docker-php-ext-install gd pdo pdo_mysql mbstring zip bcmath xml intl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
