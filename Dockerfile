@@ -1,10 +1,10 @@
-# Use PHP 8.1 with Apache
-FROM php:8.1-apache
+# Use PHP 8.1 with Apache and GD preinstalled
+FROM php:8.1-apache-bullseye
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Install system dependencies
+# Install system dependencies (only essentials)
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -13,17 +13,8 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     libzip-dev \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    libwebp-dev \
     libssl-dev \
-    pkg-config \
-    && docker-php-ext-configure gd \
-        --with-freetype \
-        --with-jpeg \
-        --with-webp \
-    && docker-php-ext-install gd pdo pdo_mysql mbstring zip bcmath xml intl \
+    && docker-php-ext-install pdo pdo_mysql mbstring bcmath intl zip xml \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache mod_rewrite
