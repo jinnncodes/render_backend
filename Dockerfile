@@ -4,7 +4,7 @@ FROM php:8.1-apache
 # Set working directory
 WORKDIR /var/www/html
 
-# Install system dependencies and PHP extensions required for Laravel
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -17,8 +17,9 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libfreetype6-dev \
     libssl-dev \
-    && docker-php-ext-install pdo pdo_mysql mbstring zip bcmath xml intl gd \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql mbstring zip bcmath xml intl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
